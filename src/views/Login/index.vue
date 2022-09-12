@@ -37,6 +37,9 @@ export default {
         const res = await loginAPI(this.user)
         Notify({ type: 'success', message: '登陆成功' })
         setToken(res.data.data.token)
+        this.$router.push({
+          path: '/layout/home'
+        })
       } catch (err) {
         Notify({ type: 'danger', message: '手机号或密码错误' })
       }
