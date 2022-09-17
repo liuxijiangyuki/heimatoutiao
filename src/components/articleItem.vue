@@ -23,7 +23,7 @@
             <span> {{ formateTime(artObj.pubdate) }}</span>
           </div>
           <!-- 反馈按钮 -->
-          <van-icon name="cross" @click="show = true" />
+          <van-icon name="cross" @click.stop="show = true" v-if="isShow" />
         </div>
       </template>
     </van-cell>
@@ -37,7 +37,11 @@ import { timeAgo } from '@/utils/date'
 import { firstActions, secondActions } from '@/api/report'
 export default {
   props: {
-    artObj: Object
+    artObj: Object,
+    isShow: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {

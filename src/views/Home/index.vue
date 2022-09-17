@@ -6,7 +6,7 @@
           <img src="@/assets/toutiao_logo.png" alt="" class="logo">
         </template>
         <template #right>
-          <van-icon name="search" size="0.48rem" color="#fff" />
+          <van-icon name="search" size="0.48rem" color="#fff" @click="toSearch" />
         </template>
       </van-nav-bar>
     </div>
@@ -76,6 +76,9 @@ export default {
     async closeMoreFn () {
       this.show = false
       this.$refs.editRef.isEdit = false
+    },
+    toSearch () {
+      this.$router.push('/search')
     }
   },
   computed: {

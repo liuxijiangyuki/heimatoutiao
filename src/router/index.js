@@ -4,6 +4,9 @@ import Login from '@/views/Login'
 import Layout from '@/views/Layout'
 import User from '@/views/User'
 import Home from '@/views/Home'
+import Search from '@/views/Search'
+import searchResult from '@/views/Search/searchResult'
+import ArticleDetail from '@/views/ArticleDetail'
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,6 +44,18 @@ const routes = [
         component: Home
       }
     ]
+  },
+  {
+    path: '/search',
+    component: Search
+  },
+  {
+    path: '/searchresult/:kw',
+    component: searchResult
+  },
+  {
+    path: '/detail',
+    component: ArticleDetail
   }
 ]
 

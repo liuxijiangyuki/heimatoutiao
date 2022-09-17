@@ -4,7 +4,8 @@
 
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" :immediate-check="false"
         offset="50">
-        <articleItem v-for="obj in list" :key="obj.id" :artObj="obj" @dislikeEV='dislikeFn' @reportEV="reportFn">
+        <articleItem @click.native='toDetail(obj.art_id)' v-for="obj in list" :key="obj.id" :artObj="obj"
+          @dislikeEV='dislikeFn' @reportEV="reportFn">
         </articleItem>
       </van-list>
     </van-pull-refresh>
@@ -12,7 +13,7 @@
 </template>
 
 <script>
-import articleItem from './articleItem.vue'
+import articleItem from '@/components/articleItem.vue'
 import { dislikeArticleAPI, getArticleListAPI, reportArticleAPI } from '@/api'
 import { Notify } from 'vant'
 export default {
@@ -47,7 +48,6 @@ export default {
         channel_id: this.channelID,
         timestamp: this.theTime
       })
-      console.log(res2)
       if (res2.data.data.pre_timestamp === null) {
         this.finished = true
         return
@@ -72,6 +72,11 @@ export default {
       Notify({
         type: 'success',
         message: '举报成功'
+      })
+    },
+    toDetail (id) {
+      this.$router.push({
+        path: `/detail?art_id=${id}`
       })
     }
   }
