@@ -6,7 +6,7 @@
       <van-cell>
         <!-- 使用 title 插槽来自定义标题 -->
         <template #icon>
-          <img :src="userObj.photo" alt="" class="avatar">
+          <img :src="$store.state.userPhoto" alt="" class="avatar">
         </template>
         <template #title>
           <span class="username"> {{ userObj.name }} </span>
@@ -34,8 +34,8 @@
 
     <!-- 操作面板 -->
     <van-cell-group class="action-card">
-      <van-cell icon="edit" title="编辑资料" is-link />
-      <van-cell icon="chat-o" title="小思同学" is-link />
+      <van-cell icon="edit" title="编辑资料" is-link to="/useredit" />
+      <van-cell icon="chat-o" title="小思同学" is-link to="/chat" />
       <van-cell icon="warning-o" title="退出登录" is-link @click="logOutFn" />
     </van-cell-group>
   </div>
@@ -53,8 +53,9 @@ export default {
   },
   async created () {
     const res = await getUserInfoAPI()
-    console.log(res)
     this.userObj = res.data.data
+    this.$store.commit('SET_USERPHOTO', this.userObj.photo)
+    console.log(this.$route)
   },
   methods: {
     logOutFn () {

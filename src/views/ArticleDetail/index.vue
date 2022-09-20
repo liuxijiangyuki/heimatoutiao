@@ -20,21 +20,25 @@
           </div>
         </template>
       </van-cell>
+      <van-loading color="#1989fa" v-if="Object.keys(artObj).length === 0">文章加载中... </van-loading>
+      <div v-else>
 
-      <!-- 分割线 -->
-      <van-divider></van-divider>
+        <!-- 分割线 -->
+        <van-divider></van-divider>
 
-      <!-- 文章内容 -->
-      <div class="art-content" v-html="artObj.content"></div>
+        <!-- 文章内容 -->
+        <div class="art-content" v-html="artObj.content"></div>
 
-      <!-- 分割线 -->
-      <van-divider>End</van-divider>
+        <!-- 分割线 -->
+        <van-divider>End</van-divider>
 
-      <!-- 点赞 -->
-      <div class="like-box">
-        <van-button icon="good-job" type="danger" size="small" v-if="artObj.like_count === 1" @click="loveFn(true)">已点赞
-        </van-button>
-        <van-button icon="good-job-o" type="danger" plain size="small" v-else @click="loveFn(false)">点赞</van-button>
+        <!-- 点赞 -->
+        <div class="like-box">
+          <van-button icon="good-job" type="danger" size="small" v-if="artObj.like_count === 1" @click="loveFn(true)">
+            已点赞
+          </van-button>
+          <van-button icon="good-job-o" type="danger" plain size="small" v-else @click="loveFn(false)">点赞</van-button>
+        </div>
       </div>
     </div>
     <!-- 评论 -->
@@ -46,6 +50,7 @@
 import { detailAPI, followedAPI, unFollowedAPI, unLikeArticleAPI, likeArticleAPI } from '@/api'
 import artCommit from './artCommit'
 export default {
+  name: 'Detail',
   data () {
     return {
       artObj: {},
@@ -144,5 +149,9 @@ export default {
 .like-box {
   display: flex;
   justify-content: center;
+}
+.van-loading {
+  text-align: center;
+  padding-top: 46px;
 }
 </style>

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+import getStorage from '@/utils/storage'
 export const loginAPI = (data) => {
   return request({
     url: '/v1_0/authorizations',
@@ -203,5 +203,37 @@ export const cancelColArtAPI = ({ target }) => {
 export const getUserInfoAPI = () => {
   return request({
     url: '/v1_0/user'
+  })
+}
+// 获取用户个人资料（编辑页面）
+export const userProfileAPI = () => {
+  return request({
+    url: '/v1_0/user/profile'
+  })
+}
+// 编辑用户头像
+export const userAvatarAPI = (fd) => {
+  return request({
+    url: '/v1_0/user/photo',
+    method: 'PATCH',
+    data: fd
+  })
+}
+// 编辑用户名称
+export const updateUserNameAPI = (obj) => {
+  return request({
+    url: '/v1_0/user/profile',
+    method: 'PATCH',
+    data: obj
+  })
+}
+// 刷新用户token
+export const uptUserTokenAPI = () => {
+  return request({
+    url: '/v1_0/authorizations',
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + getStorage('refresh_token')
+    }
   })
 }

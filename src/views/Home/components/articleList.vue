@@ -48,6 +48,7 @@ export default {
         channel_id: this.channelID,
         timestamp: this.theTime
       })
+      console.log(res2)
       if (res2.data.data.pre_timestamp === null) {
         this.finished = true
         return

@@ -54,6 +54,7 @@
 import { getArtCommentsAPI, unlikeCommentAPI, likeCommentAPI, sendComAPI } from '@/api'
 import { timeAgo } from '@/utils/date.js'
 export default {
+  name: 'artCommit',
   props: {
     bool: Boolean
   },

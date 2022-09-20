@@ -12,7 +12,7 @@
     </div>
     <!-- tab栏 -->
     <div class="main">
-      <van-tabs v-model="channelID" sticky offset-top="1.2266667rem" animated>
+      <van-tabs v-model="channelID" sticky offset-top="1.2266667rem" animated @change='changeFn'>
         <van-tab :title="obj.name" :name="obj.id" v-for="obj in userChannelList" :key="obj.art_id">
           <articleList :channelID="channelID"> </articleList>
         </van-tab>
@@ -32,24 +32,30 @@ import articleList from './components/articleList.vue'
 import { getUserChannelAPI, allChannelListAPI, updateChannelAPI, delUserChannelAPI } from '@/api'
 import channelEdit from './channelEdit.vue'
 export default {
+  name: 'Home',
   data () {
     return {
       channelID: 0,
       userChannelList: [],
       allChannelList: [],
-      show: false
+      show: false,
+      tabScrollTopObj: {} // 用于存储不同tab下的scrollTop
     }
   },
   async created () {
     const res = await getUserChannelAPI()
     this.userChannelList = res.data.data.channels
-    console.log(res)
     const res2 = await allChannelListAPI()
-    console.log(res2)
     this.allChannelList = res2.data.data.channels
   },
   components: { articleList, channelEdit },
   methods: {
+    changeFn () { // tab组件的事件函数
+      this.$nextTick(() => {
+        document.documentElement.scrollTop = this.tabScrollTopObj[this.channelID]
+      })
+      // 切换tab时赋值
+    },
     async plusClick () {
       this.show = true
     },
@@ -79,6 +85,10 @@ export default {
     },
     toSearch () {
       this.$router.push('/search')
+    },
+    saveScrollTop () { // 保存滚动条位置
+      this.$route.meta.scrollTop = document.documentElement.scrollTop
+      this.tabScrollTopObj[this.channelID] = document.documentElement.scrollTop // 滚动时动态保存到对象中
     }
   },
   computed: {
@@ -95,6 +105,14 @@ export default {
       })
       return moreAry
     }
+  },
+  activated () {
+    console.log(this.$route)
+    document.addEventListener('scroll', this.saveScrollTop) // 监听滚动事件，触发保存
+    document.documentElement.scrollTop = this.$route.meta.scrollTop
+  },
+  deactivated () {
+    document.removeEventListener('scroll', this.saveScrollTop)
   }
 }
 </script>

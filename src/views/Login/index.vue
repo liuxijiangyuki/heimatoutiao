@@ -17,6 +17,7 @@
 
 <script>
 import { Notify } from 'vant'
+import { setStorage } from '@/utils/storage.js'
 import { setToken } from '@/utils/token.js'
 import { loginAPI } from '@/api'
 export default {
@@ -37,11 +38,13 @@ export default {
         const res = await loginAPI(this.user)
         Notify({ type: 'success', message: '登陆成功' })
         setToken(res.data.data.token)
+        setStorage('refresh_token', res.data.data.refresh_token)
         this.$router.push({
           path: '/layout/home'
         })
       } catch (err) {
         Notify({ type: 'danger', message: '手机号或密码错误' })
+        console.log(err)
       }
       this.isloading = false
     }

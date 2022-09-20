@@ -5,8 +5,8 @@
       <!-- 后退按钮 -->
       <van-icon name="arrow-left" color="white" size="0.48rem" class="goback" @click="$router.back()" />
       <!-- 搜索组件 -->
-      <van-search v-model.trim="kw" placeholder="请输入搜索关键词" background="#007BFF" shape="round"  @input="inputFn"
-        @search='toSearch(kw)' />
+      <van-search v-model.trim="kw" placeholder="请输入搜索关键词" background="#007BFF" shape="round" @input="inputFn"
+        @search='toSearch(kw)' v-fofo />
     </div>
     <!-- 搜索列表 -->
     <div class="sugg-list" v-if="kw.length !== 0">
@@ -36,13 +36,15 @@
 
 <script>
 import { searchKeywordAPI } from '@/api'
+import { getStorage, setStorage } from '@/utils/storage'
 export default {
+  name: 'Search',
   data () {
     return {
       kw: '', // 搜索关键字
       timer: null,
       searchList: [],
-      history: JSON.parse(localStorage.getItem('his')) || []// 搜索历史
+      history: JSON.parse(getStorage('his')) || []// 搜索历史
     }
   },
   methods: {
@@ -52,13 +54,13 @@ export default {
         this.searchList = []
       } else {
         setTimeout(async () => {
-          console.log(this.kw)
+          console.log(123)
           const res = await searchKeywordAPI({
             keyword: this.kw
-          })
-          console.log(res)
+          }, 300)
+          console.log(123)
           this.searchList = res.data.data.options
-        }, 300)
+        }, 0)
       }
     },
     lightFn (originStr, target) {
@@ -94,7 +96,7 @@ export default {
     history: {
       deep: true,
       handler () {
-        localStorage.setItem('his', JSON.stringify(this.history))
+        setStorage('his', JSON.stringify(this.history))
       }
     }
   }

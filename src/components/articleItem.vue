@@ -8,10 +8,10 @@
         <div class="title-box">
           <!-- 标题 -->
           <span> {{ artObj.title}}</span>
-          <img v-if="artObj.cover.type === 1" :src="artObj.cover.images[0]" alt="" class="thumb">
+          <img v-if="artObj.cover.type === 1" v-lazy='artObj.cover.images[0]' alt="" class="thumb">
         </div>
         <div v-if="artObj.cover.type > 1" class="thumb-box">
-          <img v-for="(imgUrl, index) in artObj.cover.images" :key="index" :src="imgUrl" alt="" class="thumb">
+          <img v-for="(imgUrl, index) in artObj.cover.images" :key="index" v-lazy='imgUrl' alt="" class="thumb">
         </div>
       </template>
       <!-- label 区域的插槽 -->
